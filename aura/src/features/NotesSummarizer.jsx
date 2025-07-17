@@ -144,7 +144,7 @@ const NotesSummarizer = () => {
     try {
       const formData = new FormData();
       formData.append('file', file);
-      const response = await fetch('http://localhost:5000/api/pdf-extract', {
+      const response = await fetch('/api/pdf-extract', {
         method: 'POST',
         body: formData
       });
@@ -161,7 +161,7 @@ const NotesSummarizer = () => {
     setError("");
     setSummary("");
     try {
-      const response = await fetch("http://localhost:5000/api/chat", {
+      const response = await fetch('/api/chat', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: `Summarize the following notes:\n\n${text}` })
@@ -179,7 +179,7 @@ const NotesSummarizer = () => {
     setFlashError("");
     setFlashcards([]);
     try {
-      const response = await fetch("http://localhost:5000/api/chat", {
+      const response = await fetch('/api/chat', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: `Generate 5 flashcards (question and answer pairs) from the following notes. Respond in JSON array format: [{\"q\":\"question\",\"a\":\"answer\"}, ...]\n\n${summary || text}` })

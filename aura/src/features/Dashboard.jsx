@@ -176,7 +176,7 @@ const Dashboard = () => {
     let data = { quote: '' };
     try {
       do {
-        const res = await fetch("http://localhost:5000/api/quote");
+        const res = await fetch('/api/quote');
         data = await res.json();
         attempts++;
       } while (data.quote && data.quote.split(' ').length > 14 && attempts < 5);
