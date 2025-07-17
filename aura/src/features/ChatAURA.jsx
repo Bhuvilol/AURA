@@ -39,14 +39,14 @@ const MessageRow = styled.div`
   display: flex;
   align-items: flex-end;
   gap: 0.7rem;
-  justify-content: ${props => props.isUser ? "flex-end" : "flex-start"};
+  justify-content: ${props => props.$isUser ? "flex-end" : "flex-start"};
 `;
 
 const Avatar = styled.div`
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: ${props => props.isUser ? "linear-gradient(135deg, #00c6ff 0%, #0072ff 100%)" : "rgba(0,198,255,0.15)"};
+  background: ${props => props.$isUser ? "linear-gradient(135deg, #00c6ff 0%, #0072ff 100%)" : "rgba(0,198,255,0.15)"};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -56,8 +56,8 @@ const Avatar = styled.div`
 `;
 
 const MessageBubble = styled(motion.div)`
-  background: ${props => props.isUser ? "linear-gradient(90deg, #00c6ff 0%, #0072ff 100%)" : "rgba(30,40,60,0.85)"};
-  color: ${props => props.isUser ? "#fff" : "#b6eaff"};
+  background: ${props => props.$isUser ? "linear-gradient(90deg, #00c6ff 0%, #0072ff 100%)" : "rgba(30,40,60,0.85)"};
+  color: ${props => props.$isUser ? "#fff" : "#b6eaff"};
   border-radius: 18px 18px 4px 18px;
   padding: 0.9rem 1.2rem;
   max-width: 75%;
@@ -250,12 +250,12 @@ const ChatAURA = () => {
     <ChatContainer>
       <Messages>
         {messages.map((msg, i) => (
-          <MessageRow key={i} isUser={msg.sender === "user"} style={i === 0 ? { marginTop: '1.2rem' } : {}}>
+          <MessageRow key={i} $isUser={msg.sender === "user"} style={i === 0 ? { marginTop: '1.2rem' } : {}}>
             {msg.sender !== "user" && (
-              <Avatar isUser={false} title="AURA">🤖</Avatar>
+              <Avatar $isUser={false} title="AURA">🤖</Avatar>
             )}
             <MessageBubble
-              isUser={msg.sender === "user"}
+              $isUser={msg.sender === "user"}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: i * 0.05 }}
@@ -263,13 +263,13 @@ const ChatAURA = () => {
               {renderCodeBlocks(renderMath(msg.text))}
             </MessageBubble>
             {msg.sender === "user" && (
-              <Avatar isUser={true} title="You">🧑</Avatar>
+              <Avatar $isUser={true} title="You">🧑</Avatar>
             )}
           </MessageRow>
         ))}
         {typing && (
-          <MessageRow isUser={false}>
-            <Avatar isUser={false} title="AURA">🤖</Avatar>
+          <MessageRow $isUser={false}>
+            <Avatar $isUser={false} title="AURA">🤖</Avatar>
             <TypingIndicator>
               <span>• • •</span> AURA is thinking…
             </TypingIndicator>

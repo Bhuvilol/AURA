@@ -1,11 +1,14 @@
-const express = require('express');
-const axios = require('axios');
-const cors = require('cors');
-require('dotenv').config();
-const multer = require('multer');
+import dotenv from 'dotenv';
+import express from 'express';
+import axios from 'axios';
+import cors from 'cors';
+import multer from 'multer';
+import FormData from 'form-data';
+import pdfParse from 'pdf-parse';
+
+dotenv.config();
+
 const upload = multer();
-const FormData = require('form-data');
-const pdfParse = require('pdf-parse');
 
 const app = express();
 app.use(cors());
@@ -70,6 +73,10 @@ app.get('/api/quote', async (req, res) => {
     console.log(err.response?.data || err.message);
     res.status(500).json({ error: 'OpenRouter API error' });
   }
+});
+
+app.get('/', (req, res) => {
+  res.send('AURA Backend is running!');
 });
 
 const PORT = process.env.PORT || 5000;
