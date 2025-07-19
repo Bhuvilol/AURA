@@ -83,6 +83,29 @@ app.get('/api/quote', async (req, res) => {
   }
 });
 
+app.get('/api/simple-test', async (req, res) => {
+  try {
+    console.log('Simple test - API key status:');
+    console.log('API key exists:', !!process.env.OPENROUTER_API_KEY);
+    console.log('API key length:', process.env.OPENROUTER_API_KEY?.length);
+    console.log('API key starts with:', process.env.OPENROUTER_API_KEY?.substring(0, 10));
+    
+    res.json({ 
+      success: true, 
+      message: 'Simple test passed',
+      apiKeyExists: !!process.env.OPENROUTER_API_KEY,
+      apiKeyLength: process.env.OPENROUTER_API_KEY?.length,
+      apiKeyPrefix: process.env.OPENROUTER_API_KEY?.substring(0, 10)
+    });
+  } catch (err) {
+    console.log('Simple test error:', err.message);
+    res.status(500).json({ 
+      success: false, 
+      error: err.message 
+    });
+  }
+});
+
 app.get('/api/test-chat', async (req, res) => {
   try {
     console.log('Testing chat completion...');
