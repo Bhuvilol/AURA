@@ -27,7 +27,7 @@ app.post('/api/chat', async (req, res) => {
     const response = await axios.post(
       'https://openrouter.ai/api/v1/chat/completions',
       {
-        model: 'mistralai/mistral-7b-instruct:free', // You can change to other free models listed on OpenRouter
+        model: 'openai/gpt-3.5-turbo',
         messages: [{ role: 'user', content: message }],
       },
       {
@@ -63,10 +63,9 @@ app.get('/api/quote', async (req, res) => {
     const response = await axios.post(
       'https://openrouter.ai/api/v1/chat/completions',
       {
-        model: 'mistralai/mistral-7b-instruct:free',
+        model: 'openai/gpt-3.5-turbo',
         messages: [
-          { role: 'system', content: 'You are a helpful assistant that generates short, original, motivational quotes for students.' },
-          { role: 'user', content: 'Generate a short, original, motivational quote for students. The quote must be no more than 15 words.' }
+          { role: 'user', content: 'Generate a short, original, motivational quote for students (max 15 words).' }
         ],
         max_tokens: 60
       },
@@ -81,6 +80,37 @@ app.get('/api/quote', async (req, res) => {
   } catch (err) {
     console.log('Quote API error:', err.response?.data || err.message);
     res.status(500).json({ error: 'OpenRouter API error' });
+  }
+});
+
+app.get('/api/test-chat', async (req, res) => {
+  try {
+    console.log('Testing chat completion...');
+    const response = await axios.post(
+      'https://openrouter.ai/api/v1/chat/completions',
+      {
+        model: 'openai/gpt-3.5-turbo',
+        messages: [{ role: 'user', content: 'Say hello' }],
+        max_tokens: 10
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    res.json({ 
+      success: true, 
+      message: 'Chat completion works',
+      response: response.data.choices[0].message.content
+    });
+  } catch (err) {
+    console.log('Chat test error:', err.response?.data || err.message);
+    res.status(500).json({ 
+      success: false, 
+      error: err.response?.data || err.message 
+    });
   }
 });
 
