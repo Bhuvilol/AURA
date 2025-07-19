@@ -34,8 +34,6 @@ app.post('/api/chat', async (req, res) => {
         headers: {
           'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
           'Content-Type': 'application/json',
-          'HTTP-Referer': 'https://aura-backend-ewih.onrender.com',
-          'X-Title': 'AURA Backend'
         },
       }
     );
@@ -76,8 +74,6 @@ app.get('/api/quote', async (req, res) => {
         headers: {
           'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
           'Content-Type': 'application/json',
-          'HTTP-Referer': 'https://aura-backend-ewih.onrender.com',
-          'X-Title': 'AURA Backend'
         },
       }
     );
