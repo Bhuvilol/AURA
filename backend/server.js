@@ -4,7 +4,6 @@ import axios from 'axios';
 import cors from 'cors';
 import multer from 'multer';
 import FormData from 'form-data';
-import pdfParse from 'pdf-parse';
 
 dotenv.config();
 
@@ -37,12 +36,12 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
-// PDF.co PDF text extraction endpoint
+// PDF text extraction endpoint - temporarily disabled
 app.post('/api/pdf-extract', upload.single('file'), async (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
   try {
-    const data = await pdfParse(req.file.buffer);
-    res.json({ text: data.text });
+    // PDF parsing temporarily disabled - will be reimplemented with a stable library
+    res.json({ text: 'PDF parsing is temporarily disabled. Please check back later.' });
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: 'PDF parsing error' });

@@ -1,13 +1,13 @@
 {
-  "name": "backend",
+  "name": "aura-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "AURA Backend API",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "keywords": [],
+  "keywords": ["aura", "backend", "api"],
   "author": "",
   "license": "ISC",
   "type": "module",
@@ -17,7 +17,9 @@
     "dotenv": "^17.2.0",
     "express": "^5.1.0",
     "form-data": "^4.0.4",
-    "multer": "^2.0.2",
-    "pdf-parse": "^1.1.1"
+    "multer": "^2.0.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
