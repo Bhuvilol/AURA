@@ -23,6 +23,7 @@ app.post('/api/chat', async (req, res) => {
   const { message } = req.body;
   try {
     console.log('Making chat request with API key length:', process.env.OPENROUTER_API_KEY?.length);
+    console.log('API key starts with:', process.env.OPENROUTER_API_KEY?.substring(0, 10));
     const response = await axios.post(
       'https://openrouter.ai/api/v1/chat/completions',
       {
@@ -33,6 +34,8 @@ app.post('/api/chat', async (req, res) => {
         headers: {
           'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
           'Content-Type': 'application/json',
+          'HTTP-Referer': 'https://aura-backend-ewih.onrender.com',
+          'X-Title': 'AURA Backend'
         },
       }
     );
@@ -58,6 +61,7 @@ app.post('/api/pdf-extract', upload.single('file'), async (req, res) => {
 app.get('/api/quote', async (req, res) => {
   try {
     console.log('Making quote request with API key length:', process.env.OPENROUTER_API_KEY?.length);
+    console.log('API key starts with:', process.env.OPENROUTER_API_KEY?.substring(0, 10));
     const response = await axios.post(
       'https://openrouter.ai/api/v1/chat/completions',
       {
@@ -72,6 +76,8 @@ app.get('/api/quote', async (req, res) => {
         headers: {
           'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
           'Content-Type': 'application/json',
+          'HTTP-Referer': 'https://aura-backend-ewih.onrender.com',
+          'X-Title': 'AURA Backend'
         },
       }
     );
@@ -79,6 +85,32 @@ app.get('/api/quote', async (req, res) => {
   } catch (err) {
     console.log('Quote API error:', err.response?.data || err.message);
     res.status(500).json({ error: 'OpenRouter API error' });
+  }
+});
+
+app.get('/api/test-key', async (req, res) => {
+  try {
+    console.log('Testing API key...');
+    const response = await axios.get(
+      'https://openrouter.ai/api/v1/models',
+      {
+        headers: {
+          'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    res.json({ 
+      success: true, 
+      message: 'API key is valid',
+      models: response.data.data?.length || 0
+    });
+  } catch (err) {
+    console.log('API key test error:', err.response?.data || err.message);
+    res.status(500).json({ 
+      success: false, 
+      error: err.response?.data || err.message 
+    });
   }
 });
 
