@@ -27,7 +27,7 @@ app.post('/api/chat', async (req, res) => {
     const response = await axios.post(
       'https://openrouter.ai/api/v1/chat/completions',
       {
-        model: 'openai/gpt-3.5-turbo',
+        model: 'meta-llama/llama-3.1-8b-instruct:free',
         messages: [{ role: 'user', content: message }],
       },
       {
@@ -63,7 +63,7 @@ app.get('/api/quote', async (req, res) => {
     const response = await axios.post(
       'https://openrouter.ai/api/v1/chat/completions',
       {
-        model: 'openai/gpt-3.5-turbo',
+        model: 'meta-llama/llama-3.1-8b-instruct:free',
         messages: [
           { role: 'user', content: 'Generate a short, original, motivational quote for students (max 15 words).' }
         ],
@@ -89,7 +89,7 @@ app.get('/api/test-chat', async (req, res) => {
     const response = await axios.post(
       'https://openrouter.ai/api/v1/chat/completions',
       {
-        model: 'openai/gpt-3.5-turbo',
+        model: 'meta-llama/llama-3.1-8b-instruct:free',
         messages: [{ role: 'user', content: 'Say hello' }],
         max_tokens: 10
       },
