@@ -7,6 +7,12 @@ import FormData from 'form-data';
 
 dotenv.config();
 
+// Debug logging
+console.log('Environment check:');
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('OPENROUTER_API_KEY exists:', !!process.env.OPENROUTER_API_KEY);
+console.log('OPENROUTER_API_KEY length:', process.env.OPENROUTER_API_KEY?.length);
+
 const upload = multer();
 
 const app = express();
@@ -16,6 +22,7 @@ app.use(express.json());
 app.post('/api/chat', async (req, res) => {
   const { message } = req.body;
   try {
+    console.log('Making chat request with API key length:', process.env.OPENROUTER_API_KEY?.length);
     const response = await axios.post(
       'https://openrouter.ai/api/v1/chat/completions',
       {
@@ -31,7 +38,7 @@ app.post('/api/chat', async (req, res) => {
     );
     res.json({ reply: response.data.choices[0].message.content });
   } catch (err) {
-    console.log(err.response?.data || err.message);
+    console.log('Chat API error:', err.response?.data || err.message);
     res.status(500).json({ error: 'OpenRouter API error' });
   }
 });
@@ -50,6 +57,7 @@ app.post('/api/pdf-extract', upload.single('file'), async (req, res) => {
 
 app.get('/api/quote', async (req, res) => {
   try {
+    console.log('Making quote request with API key length:', process.env.OPENROUTER_API_KEY?.length);
     const response = await axios.post(
       'https://openrouter.ai/api/v1/chat/completions',
       {
@@ -69,7 +77,7 @@ app.get('/api/quote', async (req, res) => {
     );
     res.json({ quote: response.data.choices[0].message.content.trim() });
   } catch (err) {
-    console.log(err.response?.data || err.message);
+    console.log('Quote API error:', err.response?.data || err.message);
     res.status(500).json({ error: 'OpenRouter API error' });
   }
 });
