@@ -1,2 +1,5 @@
 # Ignore environment variables
 backend/.env
+
+#Ignore vscode AI rules
+.github\copilot-instructions.md
