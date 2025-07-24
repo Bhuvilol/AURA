@@ -22,25 +22,24 @@ app.use(express.json());
 app.post('/api/chat', async (req, res) => {
   const { message } = req.body;
   try {
-    console.log('Making chat request with API key length:', process.env.OPENROUTER_API_KEY?.length);
-    console.log('API key starts with:', process.env.OPENROUTER_API_KEY?.substring(0, 10));
+    console.log('Making chat request with Gemini API key length:', process.env.GEMINI_API_KEY?.length);
+    console.log('API key starts with:', process.env.GEMINI_API_KEY?.substring(0, 10));
     const response = await axios.post(
-      'https://openrouter.ai/api/v1/chat/completions',
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent',
       {
-        model: 'meta-llama/llama-3.1-8b-instruct:free',
-        messages: [{ role: 'user', content: message }],
+        contents: [{ parts: [{ text: message }] }],
       },
       {
         headers: {
-          'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+          'x-goog-api-key': process.env.GEMINI_API_KEY,
           'Content-Type': 'application/json',
         },
       }
     );
-    res.json({ reply: response.data.choices[0].message.content });
+    res.json({ reply: response.data.candidates[0].content.parts[0].text });
   } catch (err) {
     console.log('Chat API error:', err.response?.data || err.message);
-    res.status(500).json({ error: 'OpenRouter API error' });
+    res.status(500).json({ error: 'Gemini API error' });
   }
 });
 
@@ -104,37 +103,30 @@ For now, you can use this sample text to test the summarization and flashcard ge
 
 app.get('/api/quote', async (req, res) => {
   try {
-    console.log('Making quote request with API key length:', process.env.OPENROUTER_API_KEY?.length);
-    console.log('API key starts with:', process.env.OPENROUTER_API_KEY?.substring(0, 10));
+    console.log('Making quote request with Gemini API key length:', process.env.GEMINI_API_KEY?.length);
+    console.log('API key starts with:', process.env.GEMINI_API_KEY?.substring(0, 10));
     const response = await axios.post(
-      'https://openrouter.ai/api/v1/chat/completions',
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent',
       {
-        model: 'meta-llama/llama-3.1-8b-instruct:free',
-        messages: [
-          { role: 'user', content: 'Generate a short, original, motivational quote for students (max 15 words).' }
-        ],
-        max_tokens: 60
+        contents: [{ parts: [{ text: 'Generate a short, original, motivational quote for students (max 15 words).' }] }],
       },
       {
         headers: {
-          'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+          'x-goog-api-key': process.env.GEMINI_API_KEY,
           'Content-Type': 'application/json',
         },
       }
     );
-    res.json({ quote: response.data.choices[0].message.content.trim() });
+    res.json({ quote: response.data.candidates[0].content.parts[0].text.trim() });
   } catch (err) {
     console.log('Quote API error:', err.response?.data || err.message);
-    res.status(500).json({ error: 'OpenRouter API error' });
+    res.status(500).json({ error: 'Gemini API error' });
   }
 });
 
 app.get('/api/simple-test', async (req, res) => {
   try {
-    console.log('Simple test - API key status:');
-    console.log('API key exists:', !!process.env.OPENROUTER_API_KEY);
-    console.log('API key length:', process.env.OPENROUTER_API_KEY?.length);
-    console.log('API key starts with:', process.env.OPENROUTER_API_KEY?.substring(0, 10));
+  
     
     res.json({ 
       success: true, 
@@ -214,4 +206,4 @@ app.get('/', (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`)); 
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
