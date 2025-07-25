@@ -28,7 +28,7 @@ const glassTheme = {
   text: "#fff",
   card: "rgba(255,255,255,0.1)",
   border: "rgba(255,255,255,0.2)",
-  shadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)"
+  shadow: "0 8px 32px 0 rgba(139, 0, 0, 0.37)"
 };
 
 const GlassNav = styled.nav`
@@ -58,7 +58,7 @@ const GlassNav = styled.nav`
 
 const NavLink = styled(Link)`
   position: relative;
-  color: #b6eaff;
+  color: #fff;
   font-weight: 600;
   font-size: 1.13rem;
   text-decoration: none;
@@ -74,7 +74,7 @@ const NavLink = styled(Link)`
     bottom: 7px;
     height: 3px;
     border-radius: 2px;
-    background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
+    background: linear-gradient(90deg, #8B0000 0%, #b22222 100%);
     opacity: 0;
     transform: scaleX(0.7);
     transition: opacity 0.18s, transform 0.18s;
@@ -82,23 +82,23 @@ const NavLink = styled(Link)`
   }
   &:hover {
     color: #fff;
-    background: rgba(0,198,255,0.10);
-    box-shadow: 0 0 12px #00c6ff55;
+    background: rgba(139,0,0,0.10);
+    box-shadow: 0 0 32px 8px #8B0000cc, 0 0 8px 2px #fff;
     &::after {
       opacity: 1;
       transform: scaleX(1);
     }
   }
   &:active {
-    color: #00c6ff;
-    background: rgba(0,198,255,0.18);
+    color: #fff;
+    background: rgba(139,0,0,0.18);
     transform: scale(0.97);
-    box-shadow: 0 0 18px #00c6ff99;
+    box-shadow: 0 0 40px 12px #8B0000ee, 0 0 12px 3px #fff;
   }
   &.active {
     color: #fff;
-    background: rgba(0,198,255,0.18);
-    box-shadow: 0 0 18px #00c6ff99;
+    background: rgba(139,0,0,0.18);
+    box-shadow: 0 0 40px 12px #8B0000ee, 0 0 12px 3px #fff;
     &::after {
       opacity: 1;
       transform: scaleX(1);
@@ -111,6 +111,38 @@ const Placeholder = ({ name }) => (
     <h2>{name} (Coming Soon)</h2>
   </div>
 );
+
+const GithubButton = styled.a`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(90deg, #23283b 0%, #8B0000 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.4rem 1rem;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  box-shadow: 0 2px 12px 0 #8B000055;
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+  margin-left: 1rem;
+  &:hover {
+    background: linear-gradient(90deg, #8B0000 0%, #b22222 100%);
+    color: #ffe066;
+  }
+`;
+
+const AppContainer = styled.div`
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100vw;
+  background: linear-gradient(135deg, #181c24 0%, #23283b 40%, #111 100%);
+`;
 
 function RequireAuth({ user, children, showToast }) {
   const location = useLocation();
@@ -135,16 +167,19 @@ function Navigation({ user, handleSignIn, handleSignOut }) {
       <NavLink to="/notes" className={location.pathname === '/notes' ? 'active' : ''}>Notes & Summarizer</NavLink>
       {/* Auth UI */}
       <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 12 }}>
+        <GithubButton href="https://github.com/Bhuvilol/AURA" target="_blank" rel="noopener noreferrer" title="View Source on GitHub">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.58 2 12.26C2 16.62 4.87 20.26 8.84 21.5C9.34 21.59 9.52 21.32 9.52 21.09C9.52 20.88 9.51 20.3 9.51 19.61C7 20.09 6.48 18.7 6.48 18.7C6.04 17.62 5.37 17.34 5.37 17.34C4.4 16.7 5.45 16.71 5.45 16.71C6.52 16.8 7.07 17.91 7.07 17.91C8.03 19.61 9.66 19.13 10.28 18.89C10.37 18.23 10.63 17.77 10.92 17.53C8.97 17.3 6.92 16.51 6.92 13.5C6.92 12.61 7.23 11.88 7.74 11.3C7.65 11.07 7.38 10.23 7.82 9.09C7.82 9.09 8.5 8.84 9.51 9.59C10.16 9.41 10.86 9.32 11.56 9.32C12.26 9.32 12.96 9.41 13.61 9.59C14.62 8.84 15.3 9.09 15.3 9.09C15.74 10.23 15.47 11.07 15.38 11.3C15.89 11.88 16.2 12.61 16.2 13.5C16.2 16.52 14.14 17.29 12.18 17.52C12.56 17.83 12.9 18.43 12.9 19.32C12.9 20.5 12.89 21.47 12.89 21.09C12.89 21.32 13.07 21.59 13.57 21.5C17.54 20.26 20.41 16.62 20.41 12.26C20.41 6.58 15.93 2 12 2Z" fill="currentColor"/></svg>
+          GitHub
+        </GithubButton>
         {user ? (
           <>
             {user.photoURL && (
               <img src={user.photoURL} alt="avatar" style={{ width: 32, height: 32, borderRadius: "50%", marginRight: 8 }} />
             )}
-            <span style={{ color: "#b6eaff", fontWeight: 500, marginRight: 8 }}>{user.displayName || user.email}</span>
-            <button onClick={handleSignOut} style={{ background: "#00c6ff", color: "#fff", border: "none", borderRadius: 8, padding: "0.4rem 1rem", cursor: "pointer", fontWeight: 600 }}>Sign out</button>
+            <button onClick={handleSignOut} style={{ background: "linear-gradient(90deg, #4b1c1c 0%, #8B0000 60%, #b22222 100%)", color: "#fff", border: "none", borderRadius: 8, padding: "0.4rem 1rem", cursor: "pointer", fontWeight: 600, boxShadow: "0 2px 12px 0 #8B000055", transition: "background 0.2s" }}>Sign out</button>
           </>
         ) : (
-          <button onClick={handleSignIn} style={{ background: "#00c6ff", color: "#fff", border: "none", borderRadius: 8, padding: "0.4rem 1rem", cursor: "pointer", fontWeight: 600 }}>Sign in with Google</button>
+          <button onClick={handleSignIn} style={{ background: "linear-gradient(90deg, #4b1c1c 0%, #8B0000 60%, #b22222 100%)", color: "#fff", border: "none", borderRadius: 8, padding: "0.4rem 1rem", cursor: "pointer", fontWeight: 600, boxShadow: "0 2px 12px 0 #8B000055", transition: "background 0.2s" }}>Sign in with Google</button>
         )}
       </div>
     </GlassNav>
@@ -219,18 +254,20 @@ function App() {
     <ThemeProvider theme={glassTheme}>
       <GlobalStyle />
       <Router>
-        <AppContent 
-          user={user} 
-          showToast={showToast} 
-          handleSignIn={handleSignIn} 
-          handleSignOut={handleSignOut} 
-        />
-        <Toast
-          message={toast.message}
-          type={toast.type}
-          onClose={() => setToast({ message: '', type: 'info' })}
-          position={toast.type === 'warning' ? 'top' : 'bottom'}
-        />
+        <AppContainer>
+          <AppContent 
+            user={user} 
+            showToast={showToast} 
+            handleSignIn={handleSignIn} 
+            handleSignOut={handleSignOut} 
+          />
+          <Toast
+            message={toast.message}
+            type={toast.type}
+            onClose={() => setToast({ message: '', type: 'info' })}
+            position={toast.type === 'warning' ? 'top' : 'bottom'}
+          />
+        </AppContainer>
       </Router>
     </ThemeProvider>
   );

@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 import { motion } from "framer-motion";
 import katex from "katex";
 import "katex/dist/katex.min.css";
@@ -11,19 +11,24 @@ const gradientMove = keyframes`
 `;
 
 const ChatContainer = styled.div`
-  max-width: 700px;
+  max-width: 900px;
+  width: 100%;
   margin: 2rem auto;
-  background: linear-gradient(135deg, #181c24 0%, #23283b 40%, #0072ff 100%);
+  background: linear-gradient(135deg, #181c24 0%, #23283b 40%, #8B0000 100%);
   background-size: 200% 200%;
   animation: ${gradientMove} 12s ease-in-out infinite;
   border-radius: 28px;
-  box-shadow: 0 8px 32px 0 #00c6ff44, 0 0 24px 0 #00c6ff33;
-  border: 1.5px solid rgba(0,198,255,0.18);
+  box-shadow: 0 8px 32px 0 #8B000044, 0 0 24px 0 #8B000033;
+  border: 1.5px solid rgba(139,0,0,0.18);
   backdrop-filter: blur(16px);
   display: flex;
   flex-direction: column;
   min-height: 70vh;
   padding: 1.5rem 1rem 1rem 1rem;
+  transition: box-shadow 0.2s;
+  &:hover {
+    box-shadow: 0 0 24px 4px #b22222cc, 0 0 8px 2px #8B000077;
+  }
 `;
 
 const Messages = styled.div`
@@ -56,20 +61,18 @@ const Avatar = styled.div`
 `;
 
 const MessageBubble = styled(motion.div)`
-  background: ${props => props.$isUser ? "linear-gradient(90deg, #00c6ff 0%, #0072ff 100%)" : "rgba(30,40,60,0.85)"};
-  color: ${props => props.$isUser ? "#fff" : "#b6eaff"};
+  background: transparent;
+  color: #fff;
   border-radius: 18px 18px 4px 18px;
   padding: 0.9rem 1.2rem;
   max-width: 75%;
-  box-shadow: 0 2px 12px 0 #00c6ff55, 0 0 8px #00c6ff77;
   font-size: 1.08rem;
   white-space: pre-wrap;
   word-break: break-word;
   position: relative;
-  transition: box-shadow 0.2s;
-  &:hover {
-    box-shadow: 0 0 24px #00c6ffcc;
-  }
+  box-shadow: none;
+  transition: none;
+  border: 2px solid #8B0000;
 `;
 
 const InputRow = styled.div`
@@ -87,13 +90,13 @@ const ChatInput = styled.textarea`
   resize: none;
   min-height: 44px;
   background: rgba(255,255,255,0.18);
-  color: #222;
+  color: #fff;
   box-shadow: 0 2px 8px 0 rgba(0, 198, 255, 0.08);
   outline: none;
 `;
 
 const SendButton = styled.button`
-  background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
+  background: linear-gradient(90deg, #4b1c1c 0%, #8B0000 60%, #b22222 100%);
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -101,16 +104,22 @@ const SendButton = styled.button`
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
-  box-shadow: 0 2px 12px 0 rgba(0, 198, 255, 0.12);
+  box-shadow: 0 2px 12px 0 #8B000055;
   transition: background 0.2s;
   &:hover {
-    background: linear-gradient(90deg, #0072ff 0%, #00c6ff 100%);
+    background: linear-gradient(90deg, #b22222 0%, #8B0000 60%, #4b1c1c 100%);
   }
 `;
 
+const pulse = keyframes`
+  0% { box-shadow: 0 0 0 0 rgba(178,34,34,0.5); }
+  70% { box-shadow: 0 0 0 12px rgba(178,34,34,0); }
+  100% { box-shadow: 0 0 0 0 rgba(178,34,34,0); }
+`;
+
 const VoiceButton = styled.button`
-  background: rgba(0,198,255,0.12);
-  color: #0072ff;
+  background: linear-gradient(90deg, #4b1c1c 0%, #8B0000 60%, #b22222 100%);
+  color: #b22222;
   border: none;
   border-radius: 50%;
   width: 44px;
@@ -120,10 +129,19 @@ const VoiceButton = styled.button`
   justify-content: center;
   font-size: 1.3rem;
   cursor: pointer;
-  box-shadow: 0 2px 8px 0 rgba(0, 198, 255, 0.10);
+  box-shadow: 0 2px 8px 0 #8B000055;
   transition: background 0.2s;
+  position: relative;
+  z-index: 1;
+  ${({ $listening }) =>
+    $listening &&
+    css`
+      animation: ${pulse} 1.2s infinite;
+      background: linear-gradient(90deg, #b22222 0%, #ff3c00 100%);
+      color: #fff;
+    `}
   &:hover {
-    background: rgba(0,198,255,0.22);
+    background: linear-gradient(90deg, #b22222 0%, #8B0000 60%, #4b1c1c 100%);
   }
 `;
 
@@ -131,9 +149,20 @@ const TypingIndicator = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #00c6ff;
+  color: #fff;
   font-size: 1.08rem;
   margin-left: 2.5rem;
+`;
+
+const ListeningIndicator = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.08rem;
+  margin-left: 0.7rem;
+  animation: ${gradientMove} 1.2s linear infinite;
 `;
 
 // Helper to render KaTeX math
@@ -283,11 +312,20 @@ const ChatAURA = () => {
           onChange={e => setInput(e.target.value)}
           placeholder="Type your question or use the mic..."
           rows={1}
+          disabled={listening}
+          style={listening ? { opacity: 0.6, filter: "blur(1px)", pointerEvents: 'none', background: 'rgba(255,60,0,0.08)' } : {}}
         />
-        <VoiceButton onClick={handleVoice} title="Speak to AURA">
-          <span role="img" aria-label="mic">🎤</span>
+        <VoiceButton onClick={handleVoice} title="Speak to AURA" $listening={listening}>
+          <span role="img" aria-label="mic" style={{ fontSize: listening ? '1.7rem' : '1.3rem', transition: 'font-size 0.2s', color: listening ? '#ff3c00' : undefined }}>
+            {listening ? "🎤" : "🎙️"}
+          </span>
         </VoiceButton>
-        <SendButton onClick={handleSend}>Send</SendButton>
+        {listening && (
+          <ListeningIndicator>
+            <span role="img" aria-label="listening">👂</span> Listening...
+          </ListeningIndicator>
+        )}
+        <SendButton onClick={handleSend} disabled={listening}>Send</SendButton>
       </InputRow>
     </ChatContainer>
   );

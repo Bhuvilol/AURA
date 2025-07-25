@@ -13,20 +13,21 @@ const gradientMove = keyframes`
 `;
 
 const Container = styled.div`
-  max-width: 600px;
+  max-width: 900px;
+  width: 100%;
   margin: 2rem auto;
-  background: linear-gradient(135deg, #181c24 0%, #23283b 40%, #0072ff 100%);
+  background: linear-gradient(135deg, #181c24 0%, #23283b 40%, #8B0000 100%);
   background-size: 200% 200%;
   animation: ${gradientMove} 12s ease-in-out infinite;
   border-radius: 28px;
-  box-shadow: 0 8px 32px 0 #00c6ff44, 0 0 24px 0 #00c6ff33;
-  border: 1.5px solid rgba(0,198,255,0.18);
+  box-shadow: 0 8px 32px 0 #8B000044, 0 0 24px 0 #8B000033;
+  border: 1.5px solid rgba(139,0,0,0.18);
   backdrop-filter: blur(16px);
   padding: 2rem 1.5rem 1.5rem 1.5rem;
 `;
 
 const Title = styled.h2`
-  color: #00c6ff;
+  color: #fff;
   text-align: center;
   margin-bottom: 1.5rem;
   letter-spacing: 1px;
@@ -38,8 +39,8 @@ const Title = styled.h2`
     width: 60px;
     margin: 0.5rem auto 0 auto;
     border-radius: 2px;
-    background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
-    box-shadow: 0 0 12px #00c6ff99;
+    background: linear-gradient(90deg, #8B0000 0%, #b22222 100%);
+    box-shadow: 0 0 12px #8B000099;
     animation: ${gradientMove} 4s linear infinite;
   }
 `;
@@ -83,7 +84,7 @@ const DateInput = styled.input`
 `;
 
 const AddButton = styled.button`
-  background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
+  background: linear-gradient(90deg, #4b1c1c 0%, #8B0000 60%, #b22222 100%);
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -91,13 +92,13 @@ const AddButton = styled.button`
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
-  box-shadow: 0 2px 12px 0 rgba(0, 198, 255, 0.12);
+  box-shadow: 0 2px 12px 0 #8B000055;
   transition: background 0.2s;
   &:hover, &:focus {
-    background: linear-gradient(90deg, #0072ff 0%, #00c6ff 100%);
-    filter: brightness(1.15);
-    outline: 2px solid #00c6ff;
-    box-shadow: 0 0 0 3px #00c6ff55;
+    background: linear-gradient(90deg, #b22222 0%, #8B0000 60%, #4b1c1c 100%);
+    filter: brightness(1.08);
+    outline: 2px solid #8B0000;
+    box-shadow: 0 0 0 3px #8B000055;
   }
 `;
 
@@ -111,11 +112,11 @@ const TaskList = styled.div`
 const TaskCard = styled.div`
   display: flex;
   align-items: center;
-  background: rgba(30,40,60,0.85);
+  background: rgba(30,40,60,0.92);
   border-radius: 14px;
   padding: 0.8rem 1rem;
-  box-shadow: 0 2px 12px 0 rgba(0, 198, 255, 0.10);
-  border: 1px solid rgba(0,198,255,0.18);
+  box-shadow: 0 2px 12px 0 #8B000033;
+  border: 1px solid #8B0000;
   gap: 0.7rem;
 `;
 
@@ -150,23 +151,6 @@ const DeleteButton = styled.button`
   }
 `;
 
-const ProgressBarContainer = styled.div`
-  margin: 2rem 0 1rem 0;
-  background: rgba(30,40,60,0.85);
-  border-radius: 10px;
-  height: 18px;
-  width: 100%;
-  box-shadow: 0 2px 8px 0 rgba(0, 198, 255, 0.08);
-`;
-
-const ProgressBar = styled.div`
-  height: 100%;
-  border-radius: 10px;
-  background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
-  width: ${props => props.percent}%;
-  transition: width 0.4s;
-`;
-
 const Spinner = styled.div`
   border: 4px solid #00c6ff33;
   border-top: 4px solid #00c6ff;
@@ -179,6 +163,23 @@ const Spinner = styled.div`
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+`;
+
+const ProgressBarContainer = styled.div`
+  margin: 2rem 0 1rem 0;
+  background: rgba(30,40,60,0.85);
+  border-radius: 10px;
+  height: 18px;
+  width: 100%;
+  box-shadow: 0 2px 8px 0 #8B000033;
+`;
+
+const ProgressBar = styled.div`
+  height: 100%;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #8B0000 0%, #b22222 100%);
+  width: ${props => props.percent}%;
+  transition: width 0.4s;
 `;
 
 function getCurrentWeekDates() {
@@ -313,18 +314,12 @@ const TaskOrganizer = () => {
         </div>
       ) : (
         <>
-          <ProgressBarContainer>
-            <ProgressBar percent={percentAll} />
-          </ProgressBarContainer>
           <div style={{ fontSize: '1.25rem', color: '#fff', fontWeight: 600, marginBottom: '0.5rem', textAlign: 'center' }}>
             Overall Progress: {completedAll} / {tasks.length} tasks completed
           </div>
           <ProgressBarContainer>
-            <ProgressBar percent={percentWeek} />
+            <ProgressBar percent={percentAll} />
           </ProgressBarContainer>
-          <div style={{ fontSize: '1.25rem', color: '#fff', fontWeight: 600, marginBottom: '1rem', textAlign: 'center' }}>
-            Weekly Progress: {completedWeek} / {weekTasks.length} tasks completed (with due date this week)
-          </div>
           <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId="tasks">
               {(provided) => (

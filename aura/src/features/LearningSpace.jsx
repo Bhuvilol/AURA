@@ -14,13 +14,14 @@ const gradientMove = keyframes`
 
 const Container = styled.div`
   max-width: 900px;
+  width: 100%;
   margin: 2rem auto;
-  background: linear-gradient(135deg, #181c24 0%, #23283b 40%, #0072ff 100%);
+  background: linear-gradient(135deg, #181c24 0%, #23283b 40%, #8B0000 100%);
   background-size: 200% 200%;
   animation: ${gradientMove} 12s ease-in-out infinite;
   border-radius: 28px;
-  box-shadow: 0 8px 32px 0 #00c6ff44, 0 0 24px 0 #00c6ff33;
-  border: 1.5px solid rgba(0,198,255,0.18);
+  box-shadow: 0 8px 32px 0 #8B000044, 0 0 24px 0 #8B000033;
+  border: 1.5px solid rgba(139,0,0,0.18);
   backdrop-filter: blur(16px);
   padding: 2.5rem 2rem 2rem 2rem;
   display: flex;
@@ -29,7 +30,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.h2`
-  color: #00c6ff;
+  color: #fff;
   text-align: center;
   margin-bottom: 1.5rem;
   letter-spacing: 1px;
@@ -41,18 +42,18 @@ const Title = styled.h2`
     width: 60px;
     margin: 0.5rem auto 0 auto;
     border-radius: 2px;
-    background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
-    box-shadow: 0 0 12px #00c6ff99;
+    background: linear-gradient(90deg, #8B0000 0%, #b22222 100%);
+    box-shadow: 0 0 12px #8B000099;
     animation: ${gradientMove} 4s linear infinite;
   }
 `;
 
 const Section = styled.div`
-  background: rgba(30,40,60,0.85);
+  background: rgba(30,40,60,0.92);
   border-radius: 18px;
   padding: 1.5rem 1.2rem;
-  box-shadow: 0 2px 12px 0 rgba(0, 198, 255, 0.10);
-  border: 1px solid rgba(0,198,255,0.13);
+  box-shadow: 0 2px 12px 0 #8B000033;
+  border: 1px solid #8B0000;
   margin-bottom: 1.5rem;
 `;
 
@@ -69,19 +70,19 @@ const PlanGrid = styled.div`
     background: #23283b;
   }
   &::-webkit-scrollbar-thumb {
-    background: #00c6ff55;
+    background: #8B000055;
     border-radius: 8px;
   }
 `;
 
 const PlanCard = styled.div`
-  background: rgba(0,198,255,0.13);
+  background: rgba(139,0,0,0.13);
   border-radius: 16px;
   padding: 1.2rem 1rem;
   min-width: 220px;
   max-width: 260px;
-  box-shadow: 0 2px 12px 0 rgba(0, 198, 255, 0.10);
-  border: 1px solid rgba(0,198,255,0.18);
+  box-shadow: 0 2px 12px 0 #8B000033;
+  border: 1px solid #8B0000;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -92,13 +93,13 @@ const PlanCard = styled.div`
 `;
 
 const PlanTitle = styled.h3`
-  color: #00c6ff;
+  color: #fff;
   margin-bottom: 0.5rem;
   font-size: 1.15rem;
 `;
 
 const PlanDesc = styled.p`
-  color: #b6eaff;
+  color: #fff;
   font-size: 0.98rem;
   margin-bottom: 0.7rem;
 `;
@@ -112,18 +113,18 @@ const ResourceList = styled.ul`
 const ResourceItem = styled.li`
   margin-bottom: 0.7rem;
   font-size: 1.02rem;
-  color: #b6eaff;
+  color: #fff;
 `;
 
 const FlashcardBox = styled.div`
-  background: rgba(0,198,255,0.08);
+  background: rgba(139,0,0,0.08);
   border-radius: 12px;
   padding: 1rem 1.2rem;
   min-height: 90px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #00c6ff;
+  color: #fff;
   font-size: 1.1rem;
 `;
 
@@ -196,8 +197,8 @@ const ModalBox = styled.div`
   padding: 2rem 2.5rem;
   min-width: 320px;
   max-width: 95vw;
-  box-shadow: 0 8px 32px 0 #00c6ff55;
-  border: 1.5px solid #00c6ff33;
+  box-shadow: 0 8px 32px 0 #8B000055;
+  border: 1.5px solid #8B000033;
   color: #fff;
   position: relative;
 `;
@@ -207,22 +208,22 @@ const CloseBtn = styled.button`
   right: 1rem;
   background: none;
   border: none;
-  color: #00c6ff;
+  color: #fff;
   font-size: 1.5rem;
   cursor: pointer;
   &:focus {
-    outline: 2px solid #00c6ff;
-    box-shadow: 0 0 0 3px #00c6ff55;
+    outline: 2px solid #8B0000;
+    box-shadow: 0 0 0 3px #8B000055;
   }
 `;
 const StepList = styled.ul`
   margin: 1.2rem 0 0 0;
   padding: 0 0 0 1.2rem;
-  color: #b6eaff;
+  color: #fff;
 `;
 const ProgressBtn = styled.button`
   margin-top: 1.2rem;
-  background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
+  background: linear-gradient(90deg, #8B0000 0%, #b22222 100%);
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -230,12 +231,12 @@ const ProgressBtn = styled.button`
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
-  box-shadow: 0 2px 12px 0 #00c6ff55;
+  box-shadow: 0 2px 12px 0 #8B000055;
   transition: background 0.2s;
   &:hover, &:focus {
-    background: linear-gradient(90deg, #0072ff 0%, #00c6ff 100%);
-    outline: 2px solid #00c6ff;
-    box-shadow: 0 0 0 3px #00c6ff55;
+    background: linear-gradient(90deg, #b22222 0%, #8B0000 100%);
+    outline: 2px solid #8B0000;
+    box-shadow: 0 0 0 3px #8B000055;
   }
 `;
 
@@ -244,10 +245,8 @@ const SectionHeader = styled.h3`
   font-weight: 800;
   text-align: center;
   margin-bottom: 2rem;
-  background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 2px 32px rgba(0, 198, 255, 0.25);
+  color: #fff;
+  text-shadow: 0 2px 32px #8B000099;
   letter-spacing: 1px;
   position: relative;
   &::after {
@@ -257,8 +256,8 @@ const SectionHeader = styled.h3`
     width: 80px;
     margin: 0.7rem auto 0 auto;
     border-radius: 2px;
-    background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
-    box-shadow: 0 0 16px #00c6ff99;
+    background: linear-gradient(90deg, #8B0000 0%, #b22222 100%);
+    box-shadow: 0 0 16px #8B000099;
     animation: ${gradientMove} 4s linear infinite;
   }
 `;
@@ -334,7 +333,32 @@ const LearningSpace = () => {
           {resources.map((res, i) => (
             <ResourceItem key={i}>
               <span style={{fontSize:'1.2rem',marginRight:6}}>{resourceIcons[res.type]}</span>
-              <b>{res.type}:</b> <a href={res.url} target="_blank" rel="noopener noreferrer" style={{color:'#00c6ff',fontWeight:600,textDecoration:'underline'}} aria-label={`Open ${res.label} ${res.type} resource in new tab`}> {res.label}</a>
+              <b>{res.type}:</b> <a
+                href={res.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: '#fff',
+                  fontWeight: 700,
+                  textDecoration: 'underline',
+                  textDecorationColor: '#b22222',
+                  textUnderlineOffset: '4px',
+                  textDecorationThickness: '3px',
+                  filter: 'drop-shadow(0 0 6px #b22222cc)',
+                  transition: 'filter 0.2s, color 0.2s'
+                }}
+                onMouseOver={e => {
+                  e.currentTarget.style.filter = 'drop-shadow(0 0 12px #b22222), drop-shadow(0 0 2px #fff)';
+                  e.currentTarget.style.color = '#ffe066';
+                }}
+                onMouseOut={e => {
+                  e.currentTarget.style.filter = 'drop-shadow(0 0 6px #b22222cc)';
+                  e.currentTarget.style.color = '#fff';
+                }}
+                aria-label={`Open ${res.label} ${res.type} resource in new tab`}
+              >
+                {res.label}
+              </a>
             </ResourceItem>
           ))}
         </ResourceList>

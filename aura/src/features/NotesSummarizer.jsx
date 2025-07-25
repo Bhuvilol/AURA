@@ -10,14 +10,15 @@ const gradientMove = keyframes`
 `;
 
 const Container = styled.div`
-  max-width: 800px;
+  max-width: 900px;
+  width: 100%;
   margin: 2rem auto;
-  background: linear-gradient(135deg, #181c24 0%, #23283b 40%, #0072ff 100%);
+  background: linear-gradient(135deg, #181c24 0%, #23283b 40%, #8B0000 100%);
   background-size: 200% 200%;
   animation: ${gradientMove} 12s ease-in-out infinite;
   border-radius: 28px;
-  box-shadow: 0 8px 32px 0 #00c6ff44, 0 0 24px 0 #00c6ff33;
-  border: 1.5px solid rgba(0,198,255,0.18);
+  box-shadow: 0 8px 32px 0 #8B000044, 0 0 24px 0 #8B000033;
+  border: 1.5px solid rgba(139,0,0,0.18);
   backdrop-filter: blur(16px);
   padding: 2.5rem 2rem 2rem 2rem;
   display: flex;
@@ -26,7 +27,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.h2`
-  color: #00c6ff;
+  color: #fff;
   text-align: center;
   margin-bottom: 1.5rem;
   letter-spacing: 1px;
@@ -38,28 +39,28 @@ const Title = styled.h2`
     width: 60px;
     margin: 0.5rem auto 0 auto;
     border-radius: 2px;
-    background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
-    box-shadow: 0 0 12px #00c6ff99;
+    background: linear-gradient(90deg, #8B0000 0%, #b22222 100%);
+    box-shadow: 0 0 12px #8B000099;
     animation: ${gradientMove} 4s linear infinite;
   }
 `;
 
 const Section = styled.div`
-  background: rgba(30,40,60,0.85);
+  background: rgba(30,40,60,0.92);
   border-radius: 18px;
   padding: 1.5rem 1.2rem;
-  box-shadow: 0 2px 12px 0 rgba(0, 198, 255, 0.10);
-  border: 1px solid rgba(0,198,255,0.13);
+  box-shadow: 0 2px 12px 0 #8B000033;
+  border: 1px solid #8B0000;
   margin-bottom: 1.5rem;
 `;
 
 const UploadBox = styled.div`
-  border: 2px dashed #00c6ff;
+  border: 2px dashed #8B0000;
   border-radius: 12px;
   padding: 1.2rem;
   text-align: center;
-  color: #00c6ff;
-  background: rgba(0,198,255,0.08);
+  color: #fff;
+  background: rgba(139,0,0,0.08);
   margin-bottom: 1rem;
 `;
 
@@ -67,18 +68,23 @@ const TextArea = styled.textarea`
   width: 100%;
   min-height: 90px;
   border-radius: 10px;
-  border: none;
+  border: 2.5px solid #8B0000;
   padding: 0.8rem 1rem;
   font-size: 1.08rem;
   background: rgba(30,40,60,0.85);
   color: #fff;
-  box-shadow: 0 2px 8px 0 rgba(0, 198, 255, 0.08);
+  box-shadow: 0 2px 8px 0 #8B000033;
   outline: none;
   margin-bottom: 1rem;
+  &:focus {
+    outline: none;
+    border: 2.5px solid #ff3c00;
+    box-shadow: 0 0 0 4px #ff3c0055;
+  }
 `;
 
 const Button = styled.button`
-  background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
+  background: linear-gradient(90deg, #4b1c1c 0%, #8B0000 60%, #b22222 100%);
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -86,31 +92,31 @@ const Button = styled.button`
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
-  box-shadow: 0 2px 12px 0 rgba(0, 198, 255, 0.12);
+  box-shadow: 0 2px 12px 0 #8B000055;
   transition: background 0.2s;
   margin-right: 1rem;
   &:hover {
-    background: linear-gradient(90deg, #0072ff 0%, #00c6ff 100%);
-    filter: brightness(1.15);
+    background: linear-gradient(90deg, #b22222 0%, #8B0000 60%, #4b1c1c 100%);
+    filter: brightness(1.08);
   }
 `;
 
 const SummaryBox = styled.div`
-  background: rgba(0,198,255,0.08);
+  background: rgba(139,0,0,0.08);
   border-radius: 12px;
   padding: 1rem 1.2rem;
   min-height: 90px;
-  color: #00c6ff;
+  color: #fff;
   font-size: 1.08rem;
   margin-bottom: 1rem;
 `;
 
 const FlashcardBox = styled.div`
-  background: rgba(0,198,255,0.08);
+  background: rgba(139,0,0,0.08);
   border-radius: 12px;
   padding: 1rem 1.2rem;
   min-height: 90px;
-  color: #00c6ff;
+  color: #fff;
   font-size: 1.08rem;
   margin-bottom: 1rem;
 `;
@@ -255,7 +261,7 @@ const NotesSummarizer = () => {
           Drag & drop PDF here or <b>click to upload</b>
           <input type="file" accept="application/pdf" style={{display:'none'}} ref={fileInputRef} onChange={handleFileUpload} />
         </UploadBox>
-        {pdfLoading && <div style={{color:'#00c6ff',marginBottom:8}}>Extracting text from PDF...</div>}
+        {pdfLoading && <div style={{color:'#ff3c00',marginBottom:8}}>Extracting text from PDF...</div>}
         <TextArea
           placeholder="Paste your notes or text here..."
           value={text}
