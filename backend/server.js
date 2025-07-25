@@ -4,7 +4,7 @@ import axios from 'axios';
 import cors from 'cors';
 import multer from 'multer';
 import FormData from 'form-data';
-import { getDocument } from 'pdfjs-dist';
+import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
 
 dotenv.config();
 
