@@ -4,7 +4,7 @@ import axios from 'axios';
 import cors from 'cors';
 import multer from 'multer';
 import FormData from 'form-data';
-import pdfParse from 'pdf-parse';
+import { getDocument } from 'pdfjs-dist';
 
 dotenv.config();
 
@@ -70,10 +70,19 @@ app.post('/api/pdf-extract', upload.single('file'), async (req, res) => {
   try {
     console.log('Processing PDF file:', req.file.originalname);
     console.log('File size:', req.file.size, 'bytes');
-    const data = await pdfParse(req.file.buffer);
+    // Use pdfjs-dist to extract text from all pages
+    const loadingTask = getDocument({ data: req.file.buffer });
+    const pdf = await loadingTask.promise;
+    let fullText = '';
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const content = await page.getTextContent();
+      const pageText = content.items.map(item => item.str).join(' ');
+      fullText += pageText + '\n';
+    }
     res.json({
-      text: data.text,
-      textLength: data.text.length,
+      text: fullText,
+      textLength: fullText.length,
       note: "Extracted text from your PDF file."
     });
   } catch (err) {
