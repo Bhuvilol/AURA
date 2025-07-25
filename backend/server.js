@@ -8,16 +8,13 @@ import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
 
 dotenv.config();
 
-// Debug logging
-console.log('Environment check:');
-console.log('NODE_ENV:', process.env.NODE_ENV);
-console.log('OPENROUTER_API_KEY exists:', !!process.env.OPENROUTER_API_KEY);
-console.log('OPENROUTER_API_KEY length:', process.env.OPENROUTER_API_KEY?.length);
-
 const upload = multer();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: ['https://auralabs.vercel.app', 'http://localhost:5173'],
+  credentials: true
+}));
 app.use(express.json());
 
 app.post('/api/chat', async (req, res) => {
