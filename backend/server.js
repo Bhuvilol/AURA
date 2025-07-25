@@ -4,6 +4,7 @@ import axios from 'axios';
 import cors from 'cors';
 import multer from 'multer';
 import FormData from 'form-data';
+import pdfParse from 'pdf-parse';
 
 dotenv.config();
 
@@ -66,35 +67,18 @@ app.post('/api/pdf-extract', upload.single('file'), async (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: 'No file uploaded' });
   }
-  
   try {
     console.log('Processing PDF file:', req.file.originalname);
     console.log('File size:', req.file.size, 'bytes');
-    
-    // For now, return a mock response since we can't parse PDFs locally
-    // In a real implementation, you would use a PDF parsing library
-    const mockText = `Sample extracted text from ${req.file.originalname}
-
-This is a demonstration of PDF text extraction. In a production environment, this would contain the actual text extracted from your PDF file.
-
-The PDF parsing functionality is working, but currently returns sample text for demonstration purposes. To implement full PDF parsing, you would need to:
-
-1. Install a PDF parsing library like pdf-parse
-2. Process the uploaded file buffer
-3. Extract and clean the text
-4. Return the processed text
-
-For now, you can use this sample text to test the summarization and flashcard generation features.`;
-    
-    res.json({ 
-      text: mockText,
-      textLength: mockText.length,
-      note: "This is sample text. Real PDF parsing would extract actual content."
+    const data = await pdfParse(req.file.buffer);
+    res.json({
+      text: data.text,
+      textLength: data.text.length,
+      note: "Extracted text from your PDF file."
     });
-    
   } catch (err) {
     console.log('PDF parsing error:', err.message);
-    res.status(500).json({ 
+    res.status(500).json({
       error: 'PDF text extraction failed. Please try again.',
       details: err.message
     });
