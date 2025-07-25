@@ -25,7 +25,7 @@ app.post('/api/chat', async (req, res) => {
     console.log('Making chat request with Gemini API key length:', process.env.GEMINI_API_KEY?.length);
     console.log('API key starts with:', process.env.GEMINI_API_KEY?.substring(0, 10));
     const response = await axios.post(
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent',
       {
         contents: [{ parts: [{ text: message }] }],
       },
@@ -106,7 +106,7 @@ app.get('/api/quote', async (req, res) => {
     console.log('Making quote request with Gemini API key length:', process.env.GEMINI_API_KEY?.length);
     console.log('API key starts with:', process.env.GEMINI_API_KEY?.substring(0, 10));
     const response = await axios.post(
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent',
       {
         contents: [{ parts: [{ text: 'Generate a short, original, motivational quote for students (max 15 words).' }] }],
       },

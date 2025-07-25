@@ -4,23 +4,20 @@ export default async function handler(req, res) {
   if (req.method === 'GET') {
     try {
       const response = await axios.post(
-        'https://openrouter.ai/api/v1/chat/completions',
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent',
         {
-          model: 'mistralai/mistral-7b-instruct:free',
-          messages: [
-            { role: 'system', content: 'You are a helpful assistant that generates short, original, motivational quotes for students.' },
-            { role: 'user', content: 'Generate a short, original, motivational quote for students. The quote must be no more than 15 words.' }
-          ],
-          max_tokens: 60
+          contents: [
+            { parts: [ { text: 'Generate a short, original, motivational quote for students. The quote must be no more than 15 words.' } ] }
+          ]
         },
         {
           headers: {
-            'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+            'x-goog-api-key': process.env.GEMINI_API_KEY,
             'Content-Type': 'application/json',
           },
         }
       );
-      res.status(200).json({ quote: response.data.choices[0].message.content.trim() });
+      res.status(200).json({ quote: response.data.candidates[0].content.parts[0].text.trim() });
     } catch (err) {
       console.log(err.response?.data || err.message);
       res.status(500).json({ error: 'OpenRouter API error' });

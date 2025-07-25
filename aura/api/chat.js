@@ -5,9 +5,8 @@ export default async function handler(req, res) {
     const { message } = req.body;
     try {
       const response = await axios.post(
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent',
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent',
         {
-          model: 'google/gemini-pro',
           contents: [{ parts: [{ text: message }] }],
         },
         {
