@@ -233,7 +233,7 @@ const ChatAURA = () => {
     setInput("");
     setTyping(true);
     try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/chat`, {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL.replace(/\/$/, '')}/api/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: input }),
